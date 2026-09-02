@@ -1,0 +1,5 @@
+aws_region   = "us-east-1"
+project_name = "tf-practice"
+
+# Uncomment if you use a named AWS CLI profile instead of the default.
+# aws_profile = "default"
