@@ -1,0 +1,6 @@
+aws_region        = "us-east-1"
+state_bucket_name = "willis-tfstate"
+lock_table_name   = "willis-tf-locks"
+
+# Uncomment if you use a named AWS CLI profile instead of the default.
+# aws_profile = "default"

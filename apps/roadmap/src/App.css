@@ -44,8 +44,25 @@
   font-size: 16px;
   font-weight: 400;
   color: var(--gray-400);
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   line-height: 1.6;
+}
+
+.hero-export {
+  display: inline-flex;
+  margin-bottom: 32px;
+  padding: 8px 14px;
+  border: 1px solid #2a2a28;
+  border-radius: 8px;
+  background: #1a1a18;
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.hero-export:hover {
+  border-color: var(--accent);
 }
 
 .hero-stats {
@@ -366,6 +383,15 @@
 .status-chip:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.status-chip.is-static {
+  cursor: default;
+}
+
+.status-chip.is-static:hover {
+  border-color: #2a2a28;
+  color: var(--gray-400);
 }
 
 .status-pip {

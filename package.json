@@ -9,6 +9,8 @@
     "dev": "npm run dev -w roadmap",
     "build": "npm run build -w roadmap",
     "lint": "npm run lint -w roadmap",
-    "preview": "npm run preview -w roadmap"
+    "preview": "npm run preview -w roadmap",
+    "write-progress": "npm run write-progress -w roadmap",
+    "publish-progress": "node scripts/publish-progress.mjs"
   }
 }

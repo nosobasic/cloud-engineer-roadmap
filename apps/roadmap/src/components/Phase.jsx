@@ -49,6 +49,7 @@ export default function Phase({
             selected={selectedId === skill.id}
             onSelect={onSelect}
             onCycleStatus={onCycleStatus}
+            readOnly={!onCycleStatus}
           />
         ))}
       </div>

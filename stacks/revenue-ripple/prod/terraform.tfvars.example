@@ -1,0 +1,7 @@
+aws_region     = "us-east-1"
+project_name   = "revenue-ripple"
+environment    = "prod"
+allowed_domain = "revenueripple.org"
+
+# Keep false for the video migration. Set true later to add SES.
+enable_email = false

@@ -1,6 +1,6 @@
 import { PHASES, computeProgress, phaseCounts } from '../data/roadmap'
 
-export default function Hero({ statuses }) {
+export default function Hero({ statuses, readOnly = false, onExportProgress }) {
   const { done, remaining, percent, total, currentPhase } = computeProgress(statuses)
 
   return (
@@ -16,9 +16,15 @@ export default function Hero({ statuses }) {
       <p className="hero-sub">
         AWS SAA certified · Healthcare IT · Epic EHR · Long Island, NY
         <br />
-        Click a card to study it. Cycle the status chip to track progress — it
-        saves in this browser.
+        {readOnly
+          ? 'Published progress is read-only. Status chips do not change for visitors.'
+          : 'Local editor: cycle a status chip, then export progress.json and publish it with IAM.'}
       </p>
+      {!readOnly && onExportProgress ? (
+        <button type="button" className="hero-export" onClick={onExportProgress}>
+          Download progress.json
+        </button>
+      ) : null}
       <div className="hero-stats">
         <div className="stat">
           <div className="stat-value">

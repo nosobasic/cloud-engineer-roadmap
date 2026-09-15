@@ -5,7 +5,14 @@ import {
   nextStatus,
 } from '../data/roadmap'
 
-export default function CardDetail({ skill, phase, status, onClose, onCycleStatus }) {
+export default function CardDetail({
+  skill,
+  phase,
+  status,
+  onClose,
+  onCycleStatus,
+  readOnly = false,
+}) {
   const closeRef = useRef(null)
   const categoryClass = CATEGORY_CLASS[skill.category] ?? 'cat-tools'
 
@@ -55,15 +62,22 @@ export default function CardDetail({ skill, phase, status, onClose, onCycleStatu
           {skill.name}
         </h2>
         <p className="drawer-summary">{skill.summary}</p>
-        <button
-          type="button"
-          className={`status-chip status-chip-${status} drawer-status`}
-          onClick={() => onCycleStatus(skill.id)}
-          aria-label={`${skill.name} is ${STATUS_LABELS[status]}. Mark as ${STATUS_LABELS[nextStatus(status)]}.`}
-        >
-          <span className="status-pip" aria-hidden="true" />
-          {STATUS_LABELS[status]} — click to cycle
-        </button>
+        {readOnly ? (
+          <div className={`status-chip status-chip-${status} drawer-status is-static`}>
+            <span className="status-pip" aria-hidden="true" />
+            {STATUS_LABELS[status]}
+          </div>
+        ) : (
+          <button
+            type="button"
+            className={`status-chip status-chip-${status} drawer-status`}
+            onClick={() => onCycleStatus(skill.id)}
+            aria-label={`${skill.name} is ${STATUS_LABELS[status]}. Mark as ${STATUS_LABELS[nextStatus(status)]}.`}
+          >
+            <span className="status-pip" aria-hidden="true" />
+            {STATUS_LABELS[status]} — click to cycle
+          </button>
+        )}
 
         <section className="drawer-section">
           <h3>Study notes</h3>

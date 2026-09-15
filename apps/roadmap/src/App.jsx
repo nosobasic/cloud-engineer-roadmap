@@ -7,7 +7,7 @@ import Phase from './components/Phase'
 import CardDetail from './components/CardDetail'
 
 function App() {
-  const { statuses, cycleStatus } = useProgress()
+  const { statuses, cycleStatus, exportProgress, readOnly } = useProgress()
   const [selectedId, setSelectedId] = useState(null)
 
   const selected = useMemo(
@@ -21,7 +21,11 @@ function App() {
 
   return (
     <div className={`roadmap${selectedId ? ' has-drawer' : ''}`}>
-      <Hero statuses={statuses} />
+      <Hero
+        statuses={statuses}
+        readOnly={readOnly}
+        onExportProgress={exportProgress}
+      />
 
       <main className="container">
         {PHASES.map((phase) => (
@@ -31,7 +35,7 @@ function App() {
             statuses={statuses}
             selectedId={selectedId}
             onSelect={setSelectedId}
-            onCycleStatus={cycleStatus}
+            onCycleStatus={readOnly ? undefined : cycleStatus}
           />
         ))}
       </main>
@@ -51,7 +55,8 @@ function App() {
           phase={selected.phase}
           status={statuses[selected.skill.id]}
           onClose={closeDetail}
-          onCycleStatus={cycleStatus}
+          onCycleStatus={readOnly ? undefined : cycleStatus}
+          readOnly={readOnly}
         />
       )}
     </div>

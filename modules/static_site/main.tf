@@ -44,6 +44,29 @@ resource "aws_cloudfront_origin_access_control" "this" {
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_cloudfront_response_headers_policy" "cors_get" {
+  name    = "${var.name}-cors-get"
+  comment = "Allow other sites (business card) to GET progress.json"
+
+  cors_config {
+    access_control_allow_credentials = false
+    origin_override                  = true
+    access_control_max_age_sec       = 600
+
+    access_control_allow_headers {
+      items = ["*"]
+    }
+
+    access_control_allow_methods {
+      items = ["GET", "HEAD"]
+    }
+
+    access_control_allow_origins {
+      items = ["*"]
+    }
+  }
+}
+
 resource "aws_cloudfront_distribution" "this" {
   enabled             = true
   is_ipv6_enabled     = true
@@ -58,12 +81,13 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   default_cache_behavior {
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "s3"
-    viewer_protocol_policy = "redirect-to-https"
-    compress               = true
-    cache_policy_id        = data.aws_cloudfront_cache_policy.caching_optimized.id
+    allowed_methods            = ["GET", "HEAD"]
+    cached_methods             = ["GET", "HEAD"]
+    target_origin_id           = "s3"
+    viewer_protocol_policy     = "redirect-to-https"
+    compress                   = true
+    cache_policy_id            = data.aws_cloudfront_cache_policy.caching_optimized.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.cors_get.id
   }
 
   restrictions {

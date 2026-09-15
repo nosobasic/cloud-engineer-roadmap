@@ -6,6 +6,7 @@ export default function SkillCard({
   selected,
   onSelect,
   onCycleStatus,
+  readOnly = false,
 }) {
   const categoryClass = CATEGORY_CLASS[skill.category] ?? 'cat-tools'
 
@@ -15,6 +16,17 @@ export default function SkillCard({
       onSelect(skill.id)
     }
   }
+
+  const chipLabel = readOnly
+    ? `${skill.name} is ${STATUS_LABELS[status]}.`
+    : `${skill.name} is ${STATUS_LABELS[status]}. Mark as ${STATUS_LABELS[nextStatus(status)]}.`
+
+  const chip = (
+    <>
+      <span className="status-pip" aria-hidden="true" />
+      {STATUS_LABELS[status]}
+    </>
+  )
 
   return (
     <article
@@ -28,18 +40,23 @@ export default function SkillCard({
     >
       <div className="skill-card-top">
         <span className={`skill-category ${categoryClass}`}>{skill.category}</span>
-        <button
-          type="button"
-          className={`status-chip status-chip-${status}`}
-          onClick={(event) => {
-            event.stopPropagation()
-            onCycleStatus(skill.id)
-          }}
-          aria-label={`${skill.name} is ${STATUS_LABELS[status]}. Mark as ${STATUS_LABELS[nextStatus(status)]}.`}
-        >
-          <span className="status-pip" aria-hidden="true" />
-          {STATUS_LABELS[status]}
-        </button>
+        {readOnly ? (
+          <span className={`status-chip status-chip-${status} is-static`} aria-label={chipLabel}>
+            {chip}
+          </span>
+        ) : (
+          <button
+            type="button"
+            className={`status-chip status-chip-${status}`}
+            onClick={(event) => {
+              event.stopPropagation()
+              onCycleStatus(skill.id)
+            }}
+            aria-label={chipLabel}
+          >
+            {chip}
+          </button>
+        )}
       </div>
       <h3 className="skill-name">{skill.name}</h3>
       <p className="skill-desc">{skill.summary}</p>

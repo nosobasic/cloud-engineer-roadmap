@@ -1,0 +1,70 @@
+{
+  "done": 6,
+  "total": 30,
+  "percent": 20,
+  "currentPhaseId": "phase-2",
+  "phases": [
+    {
+      "id": "phase-1",
+      "number": "01",
+      "shortLabel": "SAA",
+      "status": "complete"
+    },
+    {
+      "id": "phase-2",
+      "number": "02",
+      "shortLabel": "Terraform",
+      "status": "current"
+    },
+    {
+      "id": "phase-3",
+      "number": "03",
+      "shortLabel": "CloudOps",
+      "status": "upcoming"
+    },
+    {
+      "id": "phase-4",
+      "number": "04",
+      "shortLabel": "SAP",
+      "status": "upcoming"
+    },
+    {
+      "id": "phase-5",
+      "number": "05",
+      "shortLabel": "Security",
+      "status": "upcoming"
+    }
+  ],
+  "statuses": {
+    "p1-saa-cert": "done",
+    "p1-epic-ehr": "done",
+    "p1-aws-core": "done",
+    "p1-prod-apps": "done",
+    "p1-linux": "done",
+    "p1-qa": "done",
+    "p2-terraform-cert": "in-progress",
+    "p2-python": "not-started",
+    "p2-git": "not-started",
+    "p2-bash": "not-started",
+    "p2-iac-rebuild": "in-progress",
+    "p2-aws-cli": "not-started",
+    "p3-cloudops-cert": "not-started",
+    "p3-cloudwatch": "not-started",
+    "p3-docker-ecs": "not-started",
+    "p3-cicd": "not-started",
+    "p3-monitoring": "not-started",
+    "p3-yaml": "not-started",
+    "p4-sap-cert": "not-started",
+    "p4-multi-account": "not-started",
+    "p4-eks": "not-started",
+    "p4-finops": "not-started",
+    "p4-hipaa-arch": "not-started",
+    "p4-healthcare-cloud": "not-started",
+    "p5-security-cert": "not-started",
+    "p5-security-tools": "not-started",
+    "p5-hipaa-hitech": "not-started",
+    "p5-threat": "not-started",
+    "p5-hardening": "not-started",
+    "p5-healthcare-niche": "not-started"
+  }
+}

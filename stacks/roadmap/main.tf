@@ -8,7 +8,7 @@ locals {
 }
 
 module "static_site" {
-  source = "./modules/static_site"
+  source = "../../modules/static_site"
 
   name = local.name
 }
