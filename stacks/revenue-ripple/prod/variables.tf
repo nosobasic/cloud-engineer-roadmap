@@ -55,7 +55,7 @@ variable "email_send_enabled" {
 
 variable "email_from_address" {
   type        = string
-  default     = "Donte Willis <hello@revenueripple.org>"
+  default     = "Donte from RR <hello@revenueripple.org>"
 }
 
 variable "app_base_url" {

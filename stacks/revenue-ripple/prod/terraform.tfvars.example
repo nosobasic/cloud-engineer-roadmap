@@ -6,7 +6,7 @@ allowed_domain = "revenueripple.org"
 # Video CDN is already applied. Email stack is the SES/Lambda/SQS CRM.
 enable_email         = true
 email_send_enabled   = false
-email_from_address   = "Donte Willis <hello@revenueripple.org>"
+email_from_address   = "Donte from RR <hello@revenueripple.org>"
 email_physical_address = "Revenue Ripple, Attn: Donte Willis"
 email_daily_send_cap = 50
 email_templates_dir  = "/absolute/path/to/revenue-ripple/email_crm/templates"

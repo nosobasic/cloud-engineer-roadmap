@@ -15,7 +15,7 @@ variable "ses_domain" {
 
 variable "from_address" {
   type        = string
-  default     = "Donte Willis <hello@revenueripple.org>"
+  default     = "Donte from RR <hello@revenueripple.org>"
   description = "From header used by the due-worker and Founders Lambdas."
 }
 
