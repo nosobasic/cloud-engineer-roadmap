@@ -38,3 +38,6 @@ override.tf.json
 *_override.tf.json
 *.tfvars
 !*.tfvars.example
+
+# Lambda zip artifacts
+modules/**/.build/*.zip

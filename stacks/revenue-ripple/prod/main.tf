@@ -22,6 +22,15 @@ module "email" {
   count  = var.enable_email ? 1 : 0
   source = "../../../modules/email"
 
-  name_prefix = local.name_prefix
-  ses_domain  = local.ses_domain
+  name_prefix               = local.name_prefix
+  region                    = var.aws_region
+  ses_domain                = local.ses_domain
+  from_address              = var.email_from_address
+  app_base_url              = var.app_base_url
+  supabase_url              = var.supabase_url
+  supabase_service_role_key = var.supabase_service_role_key
+  email_send_enabled        = var.email_send_enabled
+  email_daily_send_cap      = var.email_daily_send_cap
+  email_physical_address    = var.email_physical_address
+  templates_dir             = var.email_templates_dir
 }

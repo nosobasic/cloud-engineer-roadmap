@@ -88,12 +88,21 @@ terraform apply
 
 Then uncomment the `backend "s3"` block in each other stack's `versions.tf`, using the same bucket and table, but a **different `key`** per stack.
 
-## 2. Revenue Ripple video CDN
+## 2. Revenue Ripple (videos + email)
 
-This is the S3 + CloudFront migration. SES stays off until you set `enable_email = true`.
+Apply only from this stack:
+
+```bash
+cd stacks/revenue-ripple/prod
+```
+
+Do **not** apply `revenue-ripple/infra/email` in the app repo. That folder is leftover docs; this stack is the source of truth.
+
+Video CDN is already on. Email (SES, due-worker, Founders FIFO, template bucket) is `enable_email = true` with `email_send_enabled = false` until DNS and SES production access are done.
 
 ```bash
 cp stacks/revenue-ripple/prod/terraform.tfvars.example stacks/revenue-ripple/prod/terraform.tfvars
+# set enable_email, supabase_url, supabase_service_role_key
 cd stacks/revenue-ripple/prod
 terraform init
 terraform plan
@@ -106,7 +115,12 @@ Outputs you will use in the Revenue Ripple app:
 |---|---|
 | `cloudfront_distribution_domain_name` | Playback URL host |
 | `s3_video_bucket_name` | Upload target |
-| `render_uploader_iam_user_name` | Create access keys in the IAM console, not in Terraform |
+| `render_uploader_iam_user_name` | Video upload keys in the IAM console |
+| `crm_sender_iam_user_name` | Render SES/SQS keys in the IAM console |
+| `ses_dkim_tokens` | DNS CNAMEs |
+| `ses_domain_verification_token` | TXT `_amazonses.revenueripple.org` |
+| `email_founders_queue_url` | Render `EMAIL_FOUNDERS_QUEUE_URL` |
+| `ses_configuration_set_name` | Render `SES_CONFIGURATION_SET` |
 
 ## 3. Roadmap lab site
 

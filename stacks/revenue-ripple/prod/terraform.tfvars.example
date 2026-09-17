@@ -3,5 +3,14 @@ project_name   = "revenue-ripple"
 environment    = "prod"
 allowed_domain = "revenueripple.org"
 
-# Keep false for the video migration. Set true later to add SES.
-enable_email = false
+# Video CDN is already applied. Email stack is the SES/Lambda/SQS CRM.
+enable_email         = true
+email_send_enabled   = false
+email_from_address   = "Donte Willis <hello@revenueripple.org>"
+email_physical_address = "Revenue Ripple, Attn: Donte Willis"
+email_daily_send_cap = 50
+email_templates_dir  = "/absolute/path/to/revenue-ripple/email_crm/templates"
+
+# Set these in this file or pass TF_VAR_supabase_url / TF_VAR_supabase_service_role_key.
+# supabase_url               = "https://YOUR.supabase.co"
+# supabase_service_role_key  = "eyJ..."

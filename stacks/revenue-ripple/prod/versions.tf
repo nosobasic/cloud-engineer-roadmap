@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.0"
     }
+    archive = {
+      source  = "hashicorp/archive"
+      version = ">= 2.4"
+    }
   }
 
   # After stacks/bootstrap is applied, uncomment and fill in the bucket/table names:

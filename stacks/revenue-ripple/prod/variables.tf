@@ -44,5 +44,52 @@ variable "ses_domain" {
 variable "enable_email" {
   type        = bool
   default     = false
-  description = "Set true to also create the SES identity and CRM sender IAM user."
+  description = "Set true to create SES, Lambdas, SQS, and the template bucket."
+}
+
+variable "email_send_enabled" {
+  type        = bool
+  default     = false
+  description = "Lambda/SES send gate. Keep false until DNS + production access."
+}
+
+variable "email_from_address" {
+  type        = string
+  default     = "Donte Willis <hello@revenueripple.org>"
+}
+
+variable "app_base_url" {
+  type        = string
+  default     = "https://revenueripple.org"
+}
+
+variable "email_physical_address" {
+  type    = string
+  default = "Revenue Ripple, Attn: Donte Willis"
+}
+
+variable "email_daily_send_cap" {
+  type    = number
+  default = 200
+}
+
+variable "email_templates_dir" {
+  type        = string
+  default     = "/Users/donte/react-router-basics/revenue-ripple/email_crm/templates"
+  description = "Absolute path to email_crm/templates in the app repo."
+}
+
+variable "supabase_url" {
+  type        = string
+  default     = null
+  nullable    = true
+  description = "Supabase project URL. Required when enable_email is true."
+}
+
+variable "supabase_service_role_key" {
+  type        = string
+  default     = null
+  nullable    = true
+  sensitive   = true
+  description = "Supabase service_role secret. Required when enable_email is true."
 }
