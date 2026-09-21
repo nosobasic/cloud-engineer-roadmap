@@ -38,7 +38,7 @@ variable "supabase_service_role_key" {
 variable "email_send_enabled" {
   type        = bool
   default     = false
-  description = "Lambda send gate. Keep false until DNS + SES production access are done."
+  description = "Lambda/SES send gate. Sandbox still only delivers to verified identities."
 }
 
 variable "email_daily_send_cap" {

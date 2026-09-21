@@ -50,7 +50,7 @@ variable "enable_email" {
 variable "email_send_enabled" {
   type        = bool
   default     = false
-  description = "Lambda/SES send gate. Keep false until DNS + production access."
+  description = "Lambda/SES send gate. Sandbox still only delivers to verified identities."
 }
 
 variable "email_from_address" {

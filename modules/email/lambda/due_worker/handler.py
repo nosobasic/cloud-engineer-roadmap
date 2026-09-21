@@ -102,6 +102,13 @@ def _render(html: str, contact: dict, extra: dict) -> str:
     return html
 
 
+def _sandbox_blocked(exc) -> bool:
+    resp = getattr(exc, "response", None) or {}
+    err = resp.get("Error") or {}
+    blob = f"{err.get('Code', '')} {err.get('Message', '')} {exc}".lower()
+    return "not verified" in blob or ("sandbox" in blob and "rejected" in blob)
+
+
 def _send(to_email: str, subject: str, html: str, unsub: str) -> str:
     ses = boto3.client("ses", region_name=REGION)
     msg = MIMEMultipart("alternative")
@@ -221,6 +228,16 @@ def handler(event, context):
             _advance(enrollment, sequence)
             sent += 1
         except Exception as exc:
+            if _sandbox_blocked(exc):
+                retry_at = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
+                _sb(
+                    "PATCH",
+                    "email_enrollments",
+                    f"id=eq.{enrollment['id']}",
+                    {"next_send_at": retry_at},
+                )
+                print(f"SES sandbox skipped unverified {contact.get('email')}; retry {retry_at}")
+                continue
             errors += 1
             print(f"send failed {contact.get('email')}: {exc}")
     if sent:

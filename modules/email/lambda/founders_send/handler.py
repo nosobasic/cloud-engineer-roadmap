@@ -65,6 +65,13 @@ def _already_sent(enrollment_id: str, step_index: int) -> bool:
     return False
 
 
+def _sandbox_blocked(exc) -> bool:
+    resp = getattr(exc, "response", None) or {}
+    err = resp.get("Error") or {}
+    blob = f"{err.get('Code', '')} {err.get('Message', '')} {exc}".lower()
+    return "not verified" in blob or ("sandbox" in blob and "rejected" in blob)
+
+
 def _send_ses(to_email: str, subject: str, html: str, unsub: str) -> str:
     ses = boto3.client("ses", region_name=REGION)
     msg = MIMEMultipart("alternative")
@@ -190,7 +197,13 @@ def _process(payload: dict):
             html = html.replace("{{" + key + "}}", val)
         if "<html" not in html.lower():
             html = f"<html><body>{html}<p style='font-size:12px'><a href='{unsub}'>Unsubscribe</a><br>{PHYSICAL}</p></body></html>"
-        _send_ses(email, step.get("subject") or "Revenue Ripple", html, unsub)
+        try:
+            _send_ses(email, step.get("subject") or "Revenue Ripple", html, unsub)
+        except Exception as exc:
+            if _sandbox_blocked(exc):
+                print(f"SES sandbox skipped unverified Founders recipient {email}: {exc}")
+                return
+            raise
         _sb(
             "POST",
             "email_events",
