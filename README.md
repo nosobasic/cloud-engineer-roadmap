@@ -146,14 +146,14 @@ terraform apply
 Publish a build from the repo root, after apply:
 
 ```bash
-npm run build
-
-aws s3 sync apps/roadmap/dist "s3://$(terraform -chdir=stacks/roadmap output -raw bucket_name)" --delete
-
-aws cloudfront create-invalidation \
-  --distribution-id "$(terraform -chdir=stacks/roadmap output -raw distribution_id)" \
-  --paths "/*"
+npm run deploy
 ```
+
+That builds `apps/roadmap`, syncs `dist/` to the lab bucket, writes `commit.txt` with the git SHA, and invalidates CloudFront. Check the live SHA at `https://<cloudfront>/commit.txt`.
+
+Pushes to `main` that touch `apps/roadmap/**` also deploy through `.github/workflows/deploy-roadmap.yml`. Add repo secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for an IAM user that can `s3:PutObject`, `s3:DeleteObject`, `s3:ListBucket` on the lab bucket and `cloudfront:CreateInvalidation` on the distribution. Manual deploys: **Actions → Deploy roadmap → Run workflow**.
+
+If you recreate the stack, update `ROADMAP_S3_BUCKET` and `ROADMAP_CLOUDFRONT_ID` in the workflow to match `terraform -chdir=stacks/roadmap output`.
 
 CloudFront maps 403/404 to `/index.html` so client-side routes still work.
 

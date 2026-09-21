@@ -1,0 +1,41 @@
+name: Deploy roadmap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/roadmap/**'
+      - 'scripts/deploy-roadmap.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy-roadmap.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+      ROADMAP_S3_BUCKET: tf-practice-light-magpie
+      ROADMAP_CLOUDFRONT_ID: E13ELUQ90EPALS
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - run: node scripts/deploy-roadmap.mjs
