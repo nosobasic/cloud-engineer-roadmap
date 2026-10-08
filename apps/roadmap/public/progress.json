@@ -1,7 +1,7 @@
 {
-  "done": 6,
+  "done": 8,
   "total": 30,
-  "percent": 20,
+  "percent": 27,
   "currentPhaseId": "phase-2",
   "phases": [
     {
@@ -42,12 +42,12 @@
     "p1-prod-apps": "done",
     "p1-linux": "done",
     "p1-qa": "done",
-    "p2-terraform-cert": "in-progress",
+    "p2-terraform-cert": "done",
     "p2-python": "not-started",
-    "p2-git": "not-started",
+    "p2-git": "done",
     "p2-bash": "not-started",
     "p2-iac-rebuild": "in-progress",
-    "p2-aws-cli": "not-started",
+    "p2-aws-cli": "in-progress",
     "p3-cloudops-cert": "not-started",
     "p3-cloudwatch": "not-started",
     "p3-docker-ecs": "not-started",

@@ -155,7 +155,7 @@ export const PHASES = [
         category: 'Cert',
         name: 'Terraform Associate 003',
         summary: 'HCL, state management, modules, remote backends',
-        defaultStatus: 'in-progress',
+        defaultStatus: 'done',
         notes:
           'Exam domains: IaC concepts, Terraform purpose, internals (state, providers, plugins), usage (init/plan/apply/destroy), collaborate (modules, backends, workspaces), and Cloud / policy extras. This repo is your lab: root module, child modules, variables, outputs, and a tfvars example. Know why state exists and why you never commit it.',
         resources: [
@@ -191,7 +191,7 @@ export const PHASES = [
         category: 'Tools',
         name: 'Git + GitHub',
         summary: 'Version control, branching, pull requests',
-        defaultStatus: 'not-started',
+        defaultStatus: 'done',
         notes:
           'IaC without Git is just clicking slower. Practice a trunk-based or short-lived branch workflow: feature branch, plan in CI later, PR description that explains the why. Never force-push main. Know git status, diff, log, and how to undo a local commit you have not pushed.',
         resources: [
@@ -243,7 +243,7 @@ export const PHASES = [
         category: 'Tools',
         name: 'AWS CLI',
         summary: 'Programmatic access, scripted deployments',
-        defaultStatus: 'not-started',
+        defaultStatus: 'in-progress',
         notes:
           'CLI is how you debug what Terraform just did. Practice aws sts get-caller-identity, describe-instances, elbv2 describe-load-balancers, and rds describe-db-instances filtered by the tags this stack applies. Profiles beat hardcoded keys. Never paste secrets into chat or git.',
         resources: [
