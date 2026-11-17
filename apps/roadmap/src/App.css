@@ -242,50 +242,6 @@
   background: var(--teal);
 }
 
-.phase-salary {
-  background: #111110;
-  border: 1px solid #2a2a28;
-  border-radius: 10px;
-  padding: 16px 20px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.salary-label {
-  font-size: 11px;
-  color: var(--gray-400);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 4px;
-}
-
-.salary-range {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: -0.01em;
-}
-
-.salary-location {
-  font-size: 12px;
-  color: var(--gray-600);
-  margin-top: 2px;
-}
-
-.salary-jump {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--green);
-  background: var(--green-light);
-  padding: 6px 12px;
-  border-radius: 6px;
-}
-
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -657,4 +613,86 @@ body.drawer-open {
     width: 100%;
     padding: 20px 20px 40px;
   }
+}
+
+/* Portfolio landing and project evidence */
+.hero {
+  padding-inline: max(clamp(20px, 5vw, 48px), calc((100% - 960px) / 2));
+}
+.hero-name {
+  max-width: 16ch;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  margin-bottom: 16px;
+}
+.hero-name span { display: block; }
+.hero-sub { max-width: 60ch; }
+.credential-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.credential-list li {
+  padding: 7px 12px;
+  border: 1px solid #37486f;
+  border-radius: 999px;
+  background: #182139;
+  color: #e1e8fc;
+  font-size: .8rem;
+}
+.hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.portfolio-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #385287;
+  border-radius: 10px;
+  color: #e1e8fc;
+  text-decoration: none;
+  font-size: .875rem;
+  font-weight: 650;
+}
+.portfolio-link.is-primary { background: #b9cbff; border-color: #b9cbff; color: #101a30; }
+.portfolio-link:focus-visible, .work-card a:focus-visible, a.tl-label:focus-visible {
+  outline: 2px solid #b9cbff;
+  outline-offset: 3px;
+}
+.portfolio-link:hover, .work-card a:hover, a.tl-label:hover { text-decoration: underline; }
+a.tl-label { color: #aeb9ce; min-width: 0; overflow-wrap: anywhere; }
+.container { padding-inline: clamp(20px, 5vw, 48px); }
+.selected-work, .roadmap-section { scroll-margin-top: 20px; padding-top: clamp(36px, 6vw, 64px); }
+.section-kicker {
+  color: #aebfff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.section-title { margin: 0 0 14px; font-size: clamp(1.55rem, 4vw, 2.2rem); line-height: 1.2; }
+.work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; }
+.work-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2b3854;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #161e31, #121622);
+  padding: 20px;
+}
+.work-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.work-description, .roadmap-intro { color: #c0cadb; font-size: .9rem; line-height: 1.55; }
+.work-description { margin: 0 0 14px; }
+.work-card a { align-self: flex-start; margin-top: auto; color: #c5d2ff; font-size: .875rem; }
+.roadmap-intro { margin: 0; }
+.roadmap-section .phase:first-of-type { padding-top: 32px; }
+@media (max-width: 560px) {
+  .hero { padding-top: 44px; }
+  .hero-stats { column-gap: 18px; row-gap: 14px; }
+  .stat-value { font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-link, .skill-card, .phase-progress-fill { transition: none; }
 }
