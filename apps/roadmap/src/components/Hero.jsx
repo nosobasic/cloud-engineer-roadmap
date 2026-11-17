@@ -1,25 +1,24 @@
 import { PHASES, computeProgress, phaseCounts } from '../data/roadmap'
 
 export default function Hero({ statuses, readOnly = false, onExportProgress }) {
-  const { done, remaining, percent, total, currentPhase } = computeProgress(statuses)
+  const { done, percent, total, currentPhase } = computeProgress(statuses)
 
   return (
     <header className="hero">
-      <div className="hero-eyebrow">
-        Willis Empire Group · Cloud Engineering Roadmap 2025–2027
-      </div>
-      <h1 className="hero-name">
-        Donte&apos;s
-        <br />
-        <span>Path to $170k+</span>
-      </h1>
+      <div className="hero-eyebrow">Donte Willis · Long Island, New York</div>
+      <h1 className="hero-name">Cloud Engineering <span>Portfolio</span></h1>
       <p className="hero-sub">
-        AWS SAA certified · Healthcare IT · Epic EHR · Long Island, NY
-        <br />
-        {readOnly
-          ? 'Published progress is read-only. Status chips do not change for visitors.'
-          : 'Local editor: cycle a status chip, then export progress.json and publish it with IAM.'}
+        Healthcare IT deployment technician with hands-on experience building and deploying web applications.
+        This portfolio shows my work in AWS and Terraform, and what I’m learning next in cloud operations.
       </p>
+      <ul className="credential-list" aria-label="Earned certifications">
+        <li>AWS Certified Solutions Architect – Associate</li>
+        <li>HashiCorp Certified: Terraform Associate</li>
+      </ul>
+      <nav className="hero-links" aria-label="Portfolio sections">
+        <a className="portfolio-link is-primary" href="#projects">View selected work</a>
+        <a className="portfolio-link" href="#roadmap">Explore the roadmap</a>
+      </nav>
       {!readOnly && onExportProgress ? (
         <button type="button" className="hero-export" onClick={onExportProgress}>
           Download progress.json
@@ -31,10 +30,6 @@ export default function Hero({ statuses, readOnly = false, onExportProgress }) {
             {done}/{total}
           </div>
           <div className="stat-label">Skills done</div>
-        </div>
-        <div className="stat">
-          <div className="stat-value">{remaining}</div>
-          <div className="stat-label">Left to go</div>
         </div>
         <div className="stat">
           <div className="stat-value">{currentPhase.shortLabel}</div>
@@ -61,9 +56,9 @@ export default function Hero({ statuses, readOnly = false, onExportProgress }) {
       </div>
       <div className="timeline-labels">
         {PHASES.map((phase) => (
-          <div key={phase.id} className="tl-label">
+          <a key={phase.id} className="tl-label" href={`#${phase.id}`}>
             {phase.shortLabel}
-          </div>
+          </a>
         ))}
       </div>
     </header>
