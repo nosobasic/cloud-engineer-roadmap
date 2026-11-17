@@ -32,14 +32,6 @@ export default function Phase({
           </div>
         </div>
       </div>
-      <div className="phase-salary">
-        <div>
-          <div className="salary-label">Target salary · NYC</div>
-          <div className="salary-range">{phase.salaryRange}</div>
-          <div className="salary-location">{phase.location}</div>
-        </div>
-        <div className="salary-jump">{phase.jump}</div>
-      </div>
       <div className="skills-grid">
         {phase.skills.map((skill) => (
           <SkillCard
