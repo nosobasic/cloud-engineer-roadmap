@@ -13,7 +13,7 @@ export default function SkillCard({
   function handleKeyDown(event) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      onSelect(skill.id)
+      onSelect(skill.id, event.currentTarget)
     }
   }
 
@@ -31,7 +31,7 @@ export default function SkillCard({
   return (
     <article
       className={`skill-card is-${status}${selected ? ' is-selected' : ''}`}
-      onClick={() => onSelect(skill.id)}
+      onClick={(event) => onSelect(skill.id, event.currentTarget)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="button"

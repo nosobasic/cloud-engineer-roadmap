@@ -11,37 +11,70 @@ export default function CardDetail({
   status,
   onClose,
   onCycleStatus,
+  returnFocusRef,
+  fallbackFocusRef,
   readOnly = false,
 }) {
   const closeRef = useRef(null)
+  const panelRef = useRef(null)
   const categoryClass = CATEGORY_CLASS[skill.category] ?? 'cat-tools'
 
   useEffect(() => {
+    const panel = panelRef.current
+    const returnFocusTo = returnFocusRef?.current
+    const fallbackFocusTo = fallbackFocusRef?.current
     closeRef.current?.focus()
+
+    function focusableElements() {
+      return [...panel.querySelectorAll('a[href], button, input, select, textarea, [tabindex]')]
+        .filter((element) => element.tabIndex >= 0 && !element.disabled && element.getClientRects().length > 0)
+    }
 
     function onKeyDown(event) {
       if (event.key === 'Escape') {
+        event.preventDefault()
         onClose()
+      } else if (event.key === 'Tab') {
+        const elements = focusableElements()
+        const first = elements[0] ?? panel
+        const last = elements.at(-1) ?? panel
+        if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+          event.preventDefault()
+          first.focus()
+        }
       }
     }
 
+    function onFocusIn(event) {
+      if (!panel.contains(event.target)) closeRef.current?.focus()
+    }
+
     document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('focusin', onFocusIn)
     document.body.classList.add('drawer-open')
     return () => {
       document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('focusin', onFocusIn)
       document.body.classList.remove('drawer-open')
+      const target = returnFocusTo?.isConnected ? returnFocusTo : fallbackFocusTo
+      target?.focus({ preventScroll: true })
     }
-  }, [skill.id, onClose])
+  }, [skill.id, onClose, returnFocusRef, fallbackFocusRef])
 
   return (
     <div className="drawer-root">
       <button
         type="button"
         className="drawer-overlay"
+        tabIndex={-1}
+        aria-hidden="true"
         aria-label="Close details"
         onClick={onClose}
       />
-      <aside className="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <aside ref={panelRef} tabIndex={-1} className="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
         <div className="drawer-header">
           <div>
             <div className={`skill-category ${categoryClass}`}>{skill.category}</div>
