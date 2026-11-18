@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import './App.css'
 import { PHASES, findSkill } from './data/roadmap'
 import { useProgress } from './hooks/useProgress'
@@ -31,6 +31,13 @@ const selectedWork = [
 function App() {
   const { statuses, cycleStatus, exportProgress, readOnly } = useProgress()
   const [selectedId, setSelectedId] = useState(null)
+  const openerRef = useRef(null)
+  const roadmapTitleRef = useRef(null)
+
+  const openDetail = useCallback((id, opener) => {
+    openerRef.current = opener
+    setSelectedId(id)
+  }, [])
 
   const selected = useMemo(
     () => (selectedId ? findSkill(selectedId) : null),
@@ -67,7 +74,7 @@ function App() {
 
         <section className="roadmap-section" id="roadmap" aria-labelledby="roadmap-title">
           <p className="section-kicker">Professional development</p>
-          <h2 id="roadmap-title" className="section-title">Cloud engineering roadmap</h2>
+          <h2 ref={roadmapTitleRef} tabIndex={-1} id="roadmap-title" className="section-title">Cloud engineering roadmap</h2>
           <p className="roadmap-intro">Open a skill to see its notes, resources, and practice goals.</p>
           {PHASES.map((phase) => (
             <Phase
@@ -75,7 +82,7 @@ function App() {
               phase={phase}
               statuses={statuses}
               selectedId={selectedId}
-              onSelect={setSelectedId}
+              onSelect={openDetail}
               onCycleStatus={readOnly ? undefined : cycleStatus}
             />
           ))}
@@ -95,6 +102,8 @@ function App() {
           phase={selected.phase}
           status={statuses[selected.skill.id]}
           onClose={closeDetail}
+          returnFocusRef={openerRef}
+          fallbackFocusRef={roadmapTitleRef}
           onCycleStatus={readOnly ? undefined : cycleStatus}
           readOnly={readOnly}
         />
